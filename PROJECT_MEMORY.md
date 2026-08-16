@@ -51,10 +51,12 @@ users. Full evidence is in `docs/MARKET_RESEARCH.md`.
 - 100% statements, lines, and functions; branch coverage above 95%.
 - ESM, CommonJS, and browser outputs.
 - Direct and npm-alias clean installs.
-- TypeScript 3.9 through 7 matrix prepared.
-- Node.js 14 through 24, Windows, macOS, Linux, Deno, and Bun CI prepared.
+- TypeScript 3.9 through 7 release matrix passed.
+- Node.js 14.17 through 24, Windows, macOS, Linux, Deno 1 and 2, and Bun passed.
 - Browser bundle is 25,668 bytes after release hardening, gated below 27 kB.
-- npm audit currently reports zero known dependency vulnerabilities.
+- npm audit reports zero known dependency vulnerabilities.
+- Public-registry direct, ESM, CommonJS, and both migration-alias installs passed.
+- npm verified registry signatures for all three installed package aliases.
 
 ## Benchmark baseline
 
@@ -64,16 +66,18 @@ comparative evidence only and varies by hardware and Node.js version.
 
 ## Release state
 
-Version 1.0.0 is implemented but this memory section must be updated with the
-final commit, CI run IDs, artifact checksums, registry integrity, release URL,
-and production documentation verification after publication.
+Version 1.0.0 was released on 2026-08-16 from commit
+`9339879bc5dc8a473f3e758f380e0b325f00c473` and annotated tag `v1.0.0`.
 
-## Release TODO
-
-- Complete all local gates from a clean lockfile install.
-- Create and push the public GitHub repository.
-- Wait for CI and CodeQL.
-- Retain the CI artifact and verify a byte-identical local rebuild.
-- Publish exact bytes to Verdaccio, verify, then public npm, verify.
-- Create GitHub release with checksum and SBOM.
-- Deploy and visually verify public documentation.
+- CI run: `31967565374`, all jobs passed.
+- CodeQL run: `31967565441`, passed.
+- Retained artifact: `/storage/data/releases/stackline-sse/1.0.0-ci-31967565374/`.
+- npm tarball SHA-512: `e289d8e8200f5a066c60ebeb5e8db80eb1f413a91c224fcc7b51f24b9066b4d50bdc538afb5353532c206dcd4e749eeb17a60684d96281f3519120d6c55e2239`.
+- npm integrity: `sha512-4onY6CAPWgZsYOvrXo24DrH0E6kcIk/Me1HyS5BmtNUL3FOK+1NTUywgbc1OdJ7rF6YGhNligfNRkSDWxV4iOQ==`.
+- Registry shasum: `480e5d9e94d675970aba1abbd03392f56a67b20f`.
+- The CI, local rebuild, Verdaccio download, and public npm download are byte-identical.
+- Verdaccio and public npm expose `1.0.0` as `latest` with public access.
+- GitHub release: `https://github.com/alexandroit/stackline-sse/releases/tag/v1.0.0`.
+- Production docs: `https://alexandro.net/docs/vanilla/sse/`.
+- Production verification: HTTP 200, exact deployed HTML hash, working parser and encoder playgrounds, no browser console errors, and no desktop or mobile overflow.
+- The central docs config, vanilla index, project sitemap, and aggregate `/docs/sitemap.xml` include the package.
