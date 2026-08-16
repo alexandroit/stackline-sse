@@ -8,6 +8,10 @@ updates:
     groups:
       development-tooling:
         dependency-type: development
+    ignore:
+      - dependency-name: eventsource-parser
+        update-types:
+          - version-update:semver-major
   - package-ecosystem: github-actions
     directory: /
     schedule:
