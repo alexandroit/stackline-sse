@@ -16,27 +16,30 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const npmCli = process.platform === 'win32'
   ? path.join(path.dirname(process.execPath), 'node_modules', 'npm', 'bin', 'npm-cli.js')
   : null;
+const packageJson = JSON.parse(await readFile(path.join(root, 'package.json'), 'utf8'));
+const expectedTarball = `${packageJson.name.replace(/^@/, '').replace(/\//g, '-')}-${packageJson.version}.tgz`;
 const work = await mkdtemp(path.join(os.tmpdir(), 'stackline-sse-install-'));
 
 try {
   const tarball = process.argv[2]
-    ? await resolveTarball(process.argv[2])
+    ? await resolveTarball(process.argv[2], expectedTarball)
     : await createTarball(path.join(work, 'artifact'));
   await smokeDirect(tarball, path.join(work, 'direct'));
   await smokeAliases(tarball, path.join(work, 'aliases'));
-  const packageJson = JSON.parse(await readFile(path.join(root, 'package.json'), 'utf8'));
   console.log(`${packageJson.name}@${packageJson.version} clean-install smoke passed on ${process.version}`);
 } finally {
   if (!process.env.KEEP_INSTALL_TEST) await rm(work, { force: true, recursive: true });
 }
 
-async function resolveTarball(input) {
+async function resolveTarball(input, filename) {
   const resolved = path.resolve(input);
   const info = await stat(resolved);
   if (info.isFile()) return resolved;
-  const tarballs = (await readdir(resolved)).filter((entry) => entry.endsWith('.tgz'));
-  if (tarballs.length !== 1) throw new Error(`Expected one tarball in ${resolved}; found ${tarballs.length}`);
-  return path.join(resolved, tarballs[0]);
+  const entries = await readdir(resolved);
+  if (!entries.includes(filename)) {
+    throw new Error(`Expected ${filename} in ${resolved}`);
+  }
+  return path.join(resolved, filename);
 }
 
 async function createTarball(directory) {
