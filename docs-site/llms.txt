@@ -1,0 +1,14 @@
+# @stackline/sse
+
+> Universal zero-dependency Server-Sent Events toolkit for parsing, encoding,
+> fetch reconnection, async iteration, Web Streams and server responses.
+
+- Version: {{VERSION}}
+- Documentation: https://alexandro.net/docs/vanilla/sse/
+- Full reference: https://alexandro.net/docs/vanilla/sse/reference.md
+- Architecture: https://alexandro.net/docs/vanilla/sse/architecture.md
+- Source: https://github.com/alexandroit/stackline-sse
+- Package: https://www.npmjs.com/package/@stackline/sse
+- Security: https://github.com/alexandroit/stackline-sse/security/policy
+
+Install with `npm install @stackline/sse`.

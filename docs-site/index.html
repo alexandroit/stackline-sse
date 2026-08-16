@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>@stackline/sse | Universal Server-Sent Events toolkit</title>
+  <meta name="description" content="Parse, encode, consume and serve resilient Server-Sent Events with one zero-dependency package for AI streaming, browsers, Node.js and edge runtimes.">
+  <meta name="theme-color" content="#101210">
+  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+  <link rel="canonical" href="https://alexandro.net/docs/vanilla/sse/">
+  <link rel="stylesheet" href="styles.css">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="@stackline/sse">
+  <meta property="og:description" content="One production toolkit for the complete Server-Sent Events lifecycle.">
+  <meta property="og:url" content="https://alexandro.net/docs/vanilla/sse/">
+  <meta property="og:image" content="https://alexandro.net/docs/vanilla/sse/assets/stream-network.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareSourceCode",
+      "name": "@stackline/sse",
+      "description": "Universal, spec-correct and memory-safe Server-Sent Events toolkit.",
+      "codeRepository": "https://github.com/alexandroit/stackline-sse",
+      "programmingLanguage": "JavaScript",
+      "runtimePlatform": ["Web browser", "Node.js", "Deno", "Bun", "Edge runtimes"],
+      "license": "https://opensource.org/license/mit",
+      "version": "{{VERSION}}"
+    }
+  </script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#top" aria-label="@stackline/sse home">
+      <span class="brand-mark" aria-hidden="true">S</span>
+      <span>@stackline/sse</span>
+    </a>
+    <nav aria-label="Primary navigation">
+      <a href="#playground">Playground</a>
+      <a href="#api">API</a>
+      <a href="#compatibility">Compatibility</a>
+      <a href="https://github.com/alexandroit/stackline-sse">GitHub</a>
+    </nav>
+    <span class="version">v{{VERSION}}</span>
+  </header>
+
+  <main id="top">
+    <section class="hero" aria-labelledby="hero-title">
+      <img src="assets/stream-network.webp" alt="A resilient event stream moving through checkpoints and branching delivery paths" width="1600" height="900" fetchpriority="high">
+      <div class="hero-shade" aria-hidden="true"></div>
+      <div class="hero-copy">
+        <p class="eyebrow">Server-Sent Events, end to end</p>
+        <h1 id="hero-title">@stackline/sse</h1>
+        <p>Parse, encode, reconnect and serve real-time streams with one zero-dependency package.</p>
+        <div class="install-row">
+          <code>npm install @stackline/sse</code>
+          <button id="copy-install" type="button">Copy install</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="tool-band" id="playground" aria-labelledby="playground-title">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Runs locally in this page</p>
+          <h2 id="playground-title">Stream lab</h2>
+        </div>
+        <div class="mode-control" role="tablist" aria-label="Playground mode">
+          <button class="mode-button active" id="mode-parse" type="button" role="tab" aria-selected="true" aria-controls="workspace">Parse</button>
+          <button class="mode-button" id="mode-encode" type="button" role="tab" aria-selected="false" aria-controls="workspace">Encode</button>
+        </div>
+      </div>
+
+      <div class="workspace" id="workspace">
+        <div class="editor-pane">
+          <div class="pane-toolbar">
+            <label for="preset">Example</label>
+            <select id="preset" aria-label="Select an example"></select>
+            <label class="compact-control" id="strict-control">
+              <input id="strict" type="checkbox">
+              Strict fields
+            </label>
+            <label class="compact-control" id="chunk-control">
+              Chunk
+              <input id="chunk-size" type="number" value="7" min="1" max="65536" inputmode="numeric">
+            </label>
+          </div>
+          <label class="editor-label" for="stream-input" id="input-label">SSE input</label>
+          <textarea id="stream-input" spellcheck="false" autocomplete="off" aria-describedby="input-note"></textarea>
+          <div class="editor-actions">
+            <p id="input-note">The parser receives this stream in incremental chunks.</p>
+            <button class="primary-button" id="run" type="button">Run parser</button>
+          </div>
+        </div>
+
+        <div class="result-pane" aria-live="polite">
+          <div class="pane-toolbar result-toolbar">
+            <span id="result-title">Parsed events</span>
+            <button class="quiet-button" id="copy-output" type="button">Copy output</button>
+          </div>
+          <div class="metrics" id="metrics" aria-label="Result metrics"></div>
+          <div class="result-output" id="result-output"></div>
+          <pre class="error-output" id="error-output" hidden></pre>
+        </div>
+      </div>
+      <p class="privacy-note">No request leaves this page. The playground executes the package browser build directly.</p>
+    </section>
+
+    <section class="content-band" id="api" aria-labelledby="api-title">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">One coherent contract</p>
+          <h2 id="api-title">The full SSE lifecycle</h2>
+        </div>
+        <a class="text-link" href="reference.md">Complete reference</a>
+      </div>
+      <div class="capability-grid">
+        <article>
+          <span class="capability-index">01</span>
+          <h3>Consume</h3>
+          <p><code>fetchSSE</code> supports POST bodies, auth, abort, resume IDs, retry policy and three timeout phases.</p>
+        </article>
+        <article>
+          <span class="capability-index">02</span>
+          <h3>Parse</h3>
+          <p><code>createParser</code> handles split UTF-8, CR, LF, CRLF, comments, retry fields and bounded buffers.</p>
+        </article>
+        <article>
+          <span class="capability-index">03</span>
+          <h3>Encode</h3>
+          <p><code>encodeSSE</code> and <code>encodeJSON</code> prevent field injection and preserve multiline payloads.</p>
+        </article>
+        <article>
+          <span class="capability-index">04</span>
+          <h3>Serve</h3>
+          <p><code>eventStreamResponse</code> and channels expose backpressure, heartbeats and correct HTTP headers.</p>
+        </article>
+      </div>
+
+      <div class="code-example">
+        <div class="code-caption">
+          <div>
+            <span class="code-kicker">AI streaming client</span>
+            <strong>Async iteration, cancellation included</strong>
+          </div>
+          <button class="quiet-button copy-code" type="button" data-copy-target="quick-code">Copy code</button>
+        </div>
+        <pre id="quick-code"><code>import { fetchSSE } from '@stackline/sse';
+
+for await (const event of fetchSSE('/api/generate', {
+  method: 'POST',
+  body: JSON.stringify({ prompt: 'Hello', stream: true }),
+  idleTimeout: 45_000,
+  retry: { retries: 3 }
+})) {
+  if (event.data === '[DONE]') break;
+  render(JSON.parse(event.data));
+}</code></pre>
+      </div>
+    </section>
+
+    <section class="content-band alternate" id="compatibility" aria-labelledby="compatibility-title">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Publish once, run broadly</p>
+          <h2 id="compatibility-title">Compatibility without baggage</h2>
+        </div>
+        <span class="zero-deps">0 runtime dependencies</span>
+      </div>
+      <div class="compatibility-layout">
+        <div class="runtime-list">
+          <div><strong>Browser</strong><span>ESM + global bundle</span><b>Ready</b></div>
+          <div><strong>Node.js</strong><span>14.17 through 24</span><b>Ready</b></div>
+          <div><strong>Edge</strong><span>Workers and Web Streams</span><b>Ready</b></div>
+          <div><strong>Deno / Bun</strong><span>Native ESM</span><b>Ready</b></div>
+          <div><strong>TypeScript</strong><span>3.9 through 7</span><b>Ready</b></div>
+        </div>
+        <div class="limits-panel">
+          <h3>Bounded by default</h3>
+          <dl>
+            <div><dt>Line length</dt><dd>1 MiB</dd></div>
+            <div><dt>Event size</dt><dd>1 MiB</dd></div>
+            <div><dt>Queued events</dt><dd>4,096</dd></div>
+            <div><dt>Feed slice</dt><dd>16 KiB</dd></div>
+          </dl>
+          <p>Oversized or malformed input fails with stable error codes instead of growing memory without a bound.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="content-band final-band" aria-labelledby="adopt-title">
+      <div>
+        <p class="eyebrow">Start with one dependency</p>
+        <h2 id="adopt-title">A smaller streaming stack.</h2>
+        <p>ESM, CommonJS, browser bundle and declarations ship from the same tested artifact.</p>
+      </div>
+      <div class="final-actions">
+        <a class="primary-link" href="https://www.npmjs.com/package/@stackline/sse">View on npm</a>
+        <a class="secondary-link" href="https://github.com/alexandroit/stackline-sse">Read the source</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>@stackline/sse v{{VERSION}}</span>
+    <span>MIT licensed</span>
+    <a href="https://github.com/alexandroit/stackline-sse/security/policy">Security</a>
+  </footer>
+
+  <script src="assets/stackline-sse.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

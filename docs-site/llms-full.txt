@@ -1,0 +1,37 @@
+# @stackline/sse v{{VERSION}}
+
+`@stackline/sse` provides the complete Server-Sent Events lifecycle in one
+package with no runtime dependencies.
+
+## Main exports
+
+- `createParser`: incremental WHATWG SSE parser for strings and UTF-8 bytes.
+- `decodeSSE`: pull-based async iterator over Response, Web Stream or iterable.
+- `decodeJSON`: JSON event decoding with optional `[DONE]` sentinel.
+- `encodeSSE`, `encodeJSON`, `encodeComment`: injection-safe encoding.
+- `fetchSSE`: streaming fetch with retries, resume IDs, timeouts and abort.
+- `fetchEventSource`: callback-oriented migration surface.
+- `eventStreamResponse`: Response from synchronous or asynchronous events.
+- `createSSEChannel`: push channel with backpressure and optional heartbeat.
+
+## Defaults
+
+- Maximum line length: 1 MiB.
+- Maximum accumulated event size: 1 MiB.
+- Maximum queued events per feed slice: 4,096.
+- Internal feed slice: 16 KiB.
+- Retry: unlimited, matching native EventSource behavior. Production callers
+  should set a finite budget, total timeout or AbortSignal.
+
+## Compatibility
+
+ESM, CommonJS and browser global builds are published. Declarations are tested
+with TypeScript 3.9 through 7. Parser and encoder work on Node.js 14.17 and
+newer; inject fetch or Web Stream globals where an older runtime lacks them.
+
+## Canonical resources
+
+- https://alexandro.net/docs/vanilla/sse/
+- https://alexandro.net/docs/vanilla/sse/reference.md
+- https://github.com/alexandroit/stackline-sse
+- https://www.npmjs.com/package/@stackline/sse

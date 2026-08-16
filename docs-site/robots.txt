@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /docs/vanilla/sse/
+
+Sitemap: https://alexandro.net/docs/vanilla/sse/sitemap.xml

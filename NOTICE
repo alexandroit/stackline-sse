@@ -1,0 +1,6 @@
+@stackline/sse
+Copyright 2026 Alexandro Paixao Marques
+
+This is an independently designed implementation of the Server-Sent Events
+wire format defined by the WHATWG HTML Living Standard. Runtime code does not
+include source copied from the packages used for development comparisons.
