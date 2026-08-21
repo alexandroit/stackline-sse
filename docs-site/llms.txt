@@ -5,6 +5,8 @@
 
 - Version: {{VERSION}}
 - Documentation: https://alexandro.net/docs/vanilla/sse/
+- Portfolio catalog: https://alexandro.net/docs/open-source/
+- Production streaming guide: https://alexandro.net/docs/open-source/guides/sse-ai-streaming/
 - Full reference: https://alexandro.net/docs/vanilla/sse/reference.md
 - Architecture: https://alexandro.net/docs/vanilla/sse/architecture.md
 - Source: https://github.com/alexandroit/stackline-sse

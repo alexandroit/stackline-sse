@@ -12,6 +12,10 @@ await mkdir(new URL('assets/', output), { recursive: true });
 await cp(new URL('dist/index.min.js', root), new URL('assets/stackline-sse.min.js', output));
 await cp(new URL('README.md', root), new URL('reference.md', output));
 await cp(new URL('docs/ARCHITECTURE.md', root), new URL('architecture.md', output));
+await mkdir(new URL('guides/', output), { recursive: true });
+await cp(new URL('docs/INTEGRATIONS.md', root), new URL('guides/integrations.md', output));
+await cp(new URL('docs/BENCHMARKS.md', root), new URL('guides/benchmarks.md', output));
+await cp(new URL('examples/', root), new URL('examples/', output), { recursive: true });
 
 for (const file of ['index.html', 'app.js', 'llms.txt', 'llms-full.txt', 'sitemap.xml']) {
   const url = new URL(file, output);

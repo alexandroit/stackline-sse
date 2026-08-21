@@ -3,6 +3,10 @@
 `@stackline/sse` provides the complete Server-Sent Events lifecycle in one
 package with no runtime dependencies.
 
+Portfolio catalog: https://alexandro.net/docs/open-source/
+Production streaming guide:
+https://alexandro.net/docs/open-source/guides/sse-ai-streaming/
+
 ## Main exports
 
 - `createParser`: incremental WHATWG SSE parser for strings and UTF-8 bytes.

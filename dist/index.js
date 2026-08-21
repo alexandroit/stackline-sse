@@ -1,4 +1,4 @@
-/*! @stackline/sse v1.0.0 | MIT */
+/*! @stackline/sse v1.0.1 | MIT */
 
 // src/errors.js
 var SSEError = class extends Error {

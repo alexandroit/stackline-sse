@@ -335,6 +335,16 @@ TypeScript 3.9, 4.7, 4.9, 5.x, 6.x, and 7.x.
 See [SECURITY.md](SECURITY.md) for vulnerability reporting and
 [CONTRIBUTING.md](CONTRIBUTING.md) for development instructions.
 
+## Adoption resources
+
+- [OpenAI, Anthropic, browser, Node.js, and edge recipes](docs/INTEGRATIONS.md)
+- [Reproducible parser and fragmentation benchmarks](docs/BENCHMARKS.md)
+- [Executable examples](examples)
+- [Stackline open-source catalog](https://alexandro.net/docs/open-source/)
+
+The examples ship in the npm tarball. Network examples expose functions and do
+not send requests during installation or import.
+
 ## License
 
 [MIT](LICENSE) Copyright 2026 Alexandro Paixao Marques.

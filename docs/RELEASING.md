@@ -24,10 +24,11 @@ npm run benchmark
 Build and pack once. Publish the same bytes everywhere.
 
 ```bash
-mkdir -p release/1.0.0
-npm pack --ignore-scripts --pack-destination release/1.0.0
-sha512sum release/1.0.0/*.tgz > release/1.0.0/SHA512SUMS
-npm sbom --omit=dev --sbom-format cyclonedx > release/1.0.0/sbom.cdx.json
+version="$(node -p "require('./package.json').version")"
+mkdir -p "release/$version"
+npm pack --ignore-scripts --pack-destination "release/$version"
+sha512sum "release/$version"/*.tgz > "release/$version/SHA512SUMS"
+npm sbom --omit=dev --sbom-format cyclonedx > "release/$version/sbom.cdx.json"
 ```
 
 Run `scripts/smoke-install.mjs` against the retained tarball.
@@ -37,8 +38,10 @@ Run `scripts/smoke-install.mjs` against the retained tarball.
 1. Publish the retained tarball to Verdaccio.
 2. Download it anonymously and compare SHA-512.
 3. Smoke install directly and through both documented aliases.
-4. Publish the exact tarball to public npm.
-5. Download it anonymously and compare SHA-512 again.
+4. Run `publish.yml` with the expected SHA-512. The trusted workflow rebuilds
+   the reviewed commit and stops unless its tarball is byte-identical.
+5. Let the workflow publish with npm provenance, then download anonymously and
+   compare SHA-512 again.
 6. Verify `latest`, registry signatures, audit output, and package visibility.
 
 Do not rebuild between publications.

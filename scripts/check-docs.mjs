@@ -10,6 +10,10 @@ const required = [
   'assets/stackline-sse.min.js',
   'reference.md',
   'architecture.md',
+  'guides/integrations.md',
+  'guides/benchmarks.md',
+  'examples/openai-responses.mjs',
+  'analytics.js',
   'robots.txt',
   'sitemap.xml',
   'llms.txt',
@@ -25,6 +29,8 @@ const styles = await readFile(new URL('styles.css', output), 'utf8');
 const robots = await readFile(new URL('robots.txt', output), 'utf8');
 const sitemap = await readFile(new URL('sitemap.xml', output), 'utf8');
 const llms = await readFile(new URL('llms.txt', output), 'utf8');
+const integrations = await readFile(new URL('guides/integrations.md', output), 'utf8');
+const benchmarks = await readFile(new URL('guides/benchmarks.md', output), 'utf8');
 const bundle = await stat(new URL('assets/stackline-sse.min.js', output));
 
 assert.match(html, /<link rel="canonical" href="https:\/\/alexandro\.net\/docs\/vanilla\/sse\/">/);
@@ -36,6 +42,11 @@ assert.match(styles, /\[hidden\][\s\S]*display: none !important/);
 assert.match(robots, /Allow: \/docs\/vanilla\/sse\//);
 assert.match(sitemap, /https:\/\/alexandro\.net\/docs\/vanilla\/sse\//);
 assert.match(llms, /@stackline\/sse/);
+assert.match(integrations, /OpenAI Responses/);
+assert.match(integrations, /Anthropic Messages/);
+assert.match(benchmarks, /eventsource-parser@3\.1\.1/);
+assert.match(html, /analytics\.js/);
+assert.doesNotMatch(app, /gtag\('event'/);
 assert.doesNotMatch(html, /{{VERSION}}/);
 assert.doesNotMatch(app, /{{VERSION}}/);
 assert.ok(bundle.size < 27_000, `browser bundle is ${bundle.size} bytes`);

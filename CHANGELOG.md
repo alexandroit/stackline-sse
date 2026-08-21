@@ -2,6 +2,24 @@
 
 All notable changes are documented in this file.
 
+## [1.0.1] - 2026-08-21
+
+### Added
+
+- Executable local stream, parser, OpenAI Responses, Anthropic Messages, and
+  edge-handler examples.
+- Integration recipes for provider streams, browsers, Node.js, Workers, and
+  low-change package aliases.
+- Reproducible parser, encoder, and adversarial-fragmentation methodology.
+- First-party documentation analytics that never records stream contents.
+- Trusted-publishing workflow for provenance-enabled future releases.
+
+### Changed
+
+- Package tarballs now include the public guides and examples.
+
+No runtime API or declaration behavior changed in this release.
+
 ## [1.0.0] - 2026-08-16
 
 ### Added
@@ -20,3 +38,4 @@ All notable changes are documented in this file.
 - Request header preservation when adding SSE negotiation and resume headers.
 
 [1.0.0]: https://github.com/alexandroit/stackline-sse/releases/tag/v1.0.0
+[1.0.1]: https://github.com/alexandroit/stackline-sse/compare/v1.0.0...v1.0.1
