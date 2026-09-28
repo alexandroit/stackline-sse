@@ -1,4 +1,4 @@
-/*! @stackline/sse v1.0.1 | MIT */
+/*! @stackline/sse v1.0.2 | MIT */
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
 var __getOwnPropNames = Object.getOwnPropertyNames;

@@ -1,6 +1,6 @@
 {
   "name": "@stackline/sse",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Universal, spec-correct and memory-safe Server-Sent Events toolkit for AI streaming, browsers, servers and edge runtimes",
   "keywords": [
     "sse",
@@ -17,7 +17,8 @@
     "browser",
     "node",
     "edge",
-    "zero-dependency"
+    "zero-dependency",
+    "stackline"
   ],
   "license": "MIT",
   "author": {

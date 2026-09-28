@@ -1,20 +1,27 @@
 # @stackline/sse
 
-[![npm version](https://img.shields.io/npm/v/@stackline/sse.svg)](https://www.npmjs.com/package/@stackline/sse)
-[![npm downloads](https://img.shields.io/npm/dm/@stackline/sse.svg)](https://www.npmjs.com/package/@stackline/sse)
-[![CI](https://github.com/alexandroit/stackline-sse/actions/workflows/ci.yml/badge.svg)](https://github.com/alexandroit/stackline-sse/actions/workflows/ci.yml)
-[![CodeQL](https://github.com/alexandroit/stackline-sse/actions/workflows/codeql.yml/badge.svg)](https://github.com/alexandroit/stackline-sse/actions/workflows/codeql.yml)
-[![license](https://img.shields.io/npm/l/@stackline/sse.svg)](LICENSE)
+> Universal, spec-correct and memory-safe Server-Sent Events toolkit for AI streaming, browsers, servers and edge runtimes
+
+[![npm version](https://img.shields.io/npm/v/@stackline/sse.svg?style=flat-square)](https://www.npmjs.com/package/@stackline/sse)
+[![license](https://img.shields.io/npm/l/@stackline/sse.svg?style=flat-square)](https://github.com/alexandroit/stackline-sse/blob/main/LICENSE)
+[![GitHub repository](https://img.shields.io/badge/GitHub-Repository-181717?style=flat-square&logo=github)](https://github.com/alexandroit/stackline-sse)
+
+**[Documentation](https://alexandro.net/docs/vanilla/sse/)** |
+**[npm](https://www.npmjs.com/package/@stackline/sse)** |
+**[Issues](https://github.com/alexandroit/stackline-sse/issues)** |
+**[Repository](https://github.com/alexandroit/stackline-sse)**
+
+**Package version:** `1.0.2`
+
+## Why this package?
 
 One zero-dependency toolkit for consuming, parsing, encoding, serving, and
 reconnecting Server-Sent Events. It is designed for AI token streams, live
 interfaces, serverless runtimes, browsers, and Node.js services.
 
-```bash
-npm install @stackline/sse
-```
+<a id="why-this-package"></a>
 
-## Why this package
+### Why this package
 
 SSE projects commonly combine one parser package, another encoder, a stale
 fetch wrapper, and custom server code. `@stackline/sse` gives those layers one
@@ -29,41 +36,49 @@ consistent contract:
 - ESM, CommonJS, browser global, TypeScript 3.9 through 7, Deno, and Bun;
 - zero runtime dependencies.
 
-## AI streaming
+## Compatibility
 
-```js
-import { fetchSSE } from '@stackline/sse';
+| Item | Value |
+| --- | --- |
+| Package | `@stackline/sse@1.0.2` |
+| Node.js runtime | `>=14.17.0` |
+| CommonJS / primary entry | `./dist/index.cjs` |
+| ES module entry | `./dist/index.js` |
+| Type declarations | `./dist/index.d.ts` |
 
-const controller = new AbortController();
+<a id="runtime-matrix"></a>
 
-for await (const event of fetchSSE('https://api.example.com/responses', {
-  method: 'POST',
-  headers: {
-    Authorization: `Bearer ${process.env.API_TOKEN}`,
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify({ model: 'example-model', stream: true }),
-  signal: controller.signal,
-  connectTimeout: 10_000,
-  idleTimeout: 45_000,
-  totalTimeout: 5 * 60_000,
-  retry: {
-    retries: 3,
-    minDelay: 500,
-    maxDelay: 10_000
-  }
-})) {
-  if (event.data === '[DONE]') break;
-  console.log(event.event, JSON.parse(event.data));
-}
+### Runtime matrix
+
+| Runtime | Parser / encoder | Fetch client | Server helpers |
+| --- | --- | --- | --- |
+| Modern browsers | Yes | Yes | Yes |
+| Node.js 18+ | Yes | Yes | Yes |
+| Node.js 14 / 16 | Yes | Inject `fetch` | Inject Web Streams if needed |
+| Deno 2 | Yes | Yes | Yes |
+| Bun | Yes | Yes | Yes |
+| Cloudflare Workers | Yes | Yes | Yes |
+
+The package ships ESM, CommonJS, a browser IIFE, and declarations tested with
+TypeScript 3.9, 4.7, 4.9, 5.x, 6.x, and 7.x.
+
+## Installation
+
+```sh
+npm install @stackline/sse
 ```
 
-`fetchSSE` accepts all ordinary `fetch` request options. Node.js 18 and newer
-provide `fetch`; Node.js 14 and 16 can pass an implementation with `fetch`.
+## Usage
 
-## Parse any stream
+```bash
+npm install @stackline/sse
+```
 
-### Async iterator
+<a id="parse-any-stream"></a>
+
+### Parse any stream
+
+#### Async iterator
 
 ```js
 import { decodeSSE } from '@stackline/sse';
@@ -78,7 +93,7 @@ for await (const event of decodeSSE(response)) {
 The source can be a `Response`, `ReadableStream`, `AsyncIterable`, or ordinary
 `Iterable` of `string` and `Uint8Array` chunks.
 
-### Incremental callback parser
+#### Incremental callback parser
 
 ```js
 import { createParser } from '@stackline/sse';
@@ -110,7 +125,9 @@ interface SSEEvent<T = string> {
 An `id`-only block commits `lastEventId` even when no message is dispatched.
 That detail matters when a connection closes immediately after a checkpoint.
 
-## JSON streams
+<a id="json-streams"></a>
+
+### JSON streams
 
 ```js
 import { decodeJSON } from '@stackline/sse';
@@ -125,7 +142,9 @@ for await (const event of decodeJSON(response, {
 Invalid JSON throws `SSEParseError`. Set `ignoreInvalidJSON: true` only when a
 mixed text and JSON protocol intentionally requires it.
 
-## Encode events
+<a id="encode-events"></a>
+
+### Encode events
 
 ```js
 import { encodeJSON, encodeSSE } from '@stackline/sse';
@@ -143,9 +162,11 @@ encodeJSON({ token: 'hello' }, { event: 'delta', id: '43' });
 `id` and `event` values cannot contain line breaks. IDs also reject NUL. This
 prevents a value from injecting additional SSE fields or HTTP resume headers.
 
-## Serve events
+<a id="serve-events"></a>
 
-### Response from an async generator
+### Serve events
+
+#### Response from an async generator
 
 ```js
 import { eventStreamResponse } from '@stackline/sse';
@@ -163,7 +184,7 @@ export function GET() {
 The response includes `text/event-stream`, `no-cache, no-transform`, and
 `X-Accel-Buffering: no` headers unless the caller overrides them.
 
-### Push channel
+#### Push channel
 
 ```js
 import { createSSEChannel } from '@stackline/sse';
@@ -184,7 +205,45 @@ channel.close();
 `send` and `sendJSON` return `false` when the stream applies backpressure.
 Wait for `channel.ready` before producing more data.
 
-## Reconnection behavior
+## Features and Integrations
+
+<a id="ai-streaming"></a>
+
+### AI streaming
+
+```js
+import { fetchSSE } from '@stackline/sse';
+
+const controller = new AbortController();
+
+for await (const event of fetchSSE('https://api.example.com/responses', {
+  method: 'POST',
+  headers: {
+    Authorization: `Bearer ${process.env.API_TOKEN}`,
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({ model: 'example-model', stream: true }),
+  signal: controller.signal,
+  connectTimeout: 10_000,
+  idleTimeout: 45_000,
+  totalTimeout: 5 * 60_000,
+  retry: {
+    retries: 3,
+    minDelay: 500,
+    maxDelay: 10_000
+  }
+})) {
+  if (event.data === '[DONE]') break;
+  console.log(event.event, JSON.parse(event.data));
+}
+```
+
+`fetchSSE` accepts all ordinary `fetch` request options. Node.js 18 and newer
+provide `fetch`; Node.js 14 and 16 can pass an implementation with `fetch`.
+
+<a id="reconnection-behavior"></a>
+
+### Reconnection behavior
 
 `fetchSSE` follows SSE resume semantics and adds explicit production controls:
 
@@ -231,23 +290,11 @@ When the input is a `Request`, its headers are preserved unless `options.headers
 explicitly replaces them. The SSE `Accept` and resume headers are then merged
 case-insensitively.
 
-## Memory safety
+<a id="migration"></a>
 
-The parser is bounded by default:
+### Migration
 
-| Limit | Default | Purpose |
-| --- | ---: | --- |
-| `maxLineLength` | 1 MiB | unterminated or oversized field line |
-| `maxEventSize` | 1 MiB | accumulated multiline event |
-| `maxQueuedEvents` | 4096 | callback burst inside one feed slice |
-| `feedSize` | 16 KiB | limits work admitted before yielding |
-
-Raise a limit explicitly for a trusted protocol that carries larger events.
-Limit failures terminate the parser with a stable `ERR_SSE_*` code.
-
-## Migration
-
-### From eventsource-parser
+#### From eventsource-parser
 
 Direct dependency:
 
@@ -271,7 +318,7 @@ npm install eventsource-parser@npm:@stackline/sse
 supported. The additional `lastEventId` property follows WHATWG resume
 semantics. Security limits are enabled by default, unlike unbounded parsers.
 
-### From @microsoft/fetch-event-source
+#### From @microsoft/fetch-event-source
 
 ```bash
 npm install @stackline/sse
@@ -297,21 +344,41 @@ npm install @microsoft/fetch-event-source@npm:@stackline/sse
 The callback names are supported. `openWhenHidden` is accepted but this package
 does not silently disconnect a healthy stream when a page becomes hidden.
 
-## Runtime matrix
+<a id="adoption-resources"></a>
 
-| Runtime | Parser / encoder | Fetch client | Server helpers |
-| --- | --- | --- | --- |
-| Modern browsers | Yes | Yes | Yes |
-| Node.js 18+ | Yes | Yes | Yes |
-| Node.js 14 / 16 | Yes | Inject `fetch` | Inject Web Streams if needed |
-| Deno 2 | Yes | Yes | Yes |
-| Bun | Yes | Yes | Yes |
-| Cloudflare Workers | Yes | Yes | Yes |
+### Adoption resources
 
-The package ships ESM, CommonJS, a browser IIFE, and declarations tested with
-TypeScript 3.9, 4.7, 4.9, 5.x, 6.x, and 7.x.
+- [OpenAI, Anthropic, browser, Node.js, and edge recipes](https://github.com/alexandroit/stackline-sse/blob/main/docs/INTEGRATIONS.md)
+- [Reproducible parser and fragmentation benchmarks](https://github.com/alexandroit/stackline-sse/blob/main/docs/BENCHMARKS.md)
+- [Executable examples](https://github.com/alexandroit/stackline-sse/blob/main/examples)
+- [Stackline open-source catalog](https://alexandro.net/docs/open-source/)
 
-## Errors
+The examples ship in the npm tarball. Network examples expose functions and do
+not send requests during installation or import.
+
+## Security
+
+<a id="memory-safety"></a>
+
+### Memory safety
+
+The parser is bounded by default:
+
+| Limit | Default | Purpose |
+| --- | ---: | --- |
+| `maxLineLength` | 1 MiB | unterminated or oversized field line |
+| `maxEventSize` | 1 MiB | accumulated multiline event |
+| `maxQueuedEvents` | 4096 | callback burst inside one feed slice |
+| `feedSize` | 16 KiB | limits work admitted before yielding |
+
+Raise a limit explicitly for a trusted protocol that carries larger events.
+Limit failures terminate the parser with a stable `ERR_SSE_*` code.
+
+## API Surface
+
+<a id="errors"></a>
+
+### Errors
 
 | Class | Code | Meaning |
 | --- | --- | --- |
@@ -322,7 +389,30 @@ TypeScript 3.9, 4.7, 4.9, 5.x, 6.x, and 7.x.
 | `SSERetryError` | `ERR_SSE_RETRY` | finite reconnect budget exhausted |
 | `SSEReplayError` | `ERR_SSE_BODY_REPLAY` | non-replayable request body |
 
-## Package integrity
+## Local Development
+
+```sh
+git clone https://github.com/alexandroit/stackline-sse.git
+cd stackline-sse
+npm ci
+npm run test
+```
+
+Release tooling uses Node.js 24.20.0 and npm 11.19.0. The consumer runtime contract remains the one documented above.
+
+## Consumer Smoke Test
+
+Run the repository's existing consumer/package check after installing development dependencies:
+
+```sh
+npm run test:install
+```
+
+## Release Checklist
+
+<a id="package-integrity"></a>
+
+### Package integrity
 
 - zero runtime dependencies;
 - no install scripts;
@@ -332,19 +422,20 @@ TypeScript 3.9, 4.7, 4.9, 5.x, 6.x, and 7.x.
   Are the Types Wrong checks;
 - release tarballs include SHA-512 checksums and a CycloneDX SBOM.
 
-See [SECURITY.md](SECURITY.md) for vulnerability reporting and
-[CONTRIBUTING.md](CONTRIBUTING.md) for development instructions.
+See [SECURITY.md](https://github.com/alexandroit/stackline-sse/blob/main/SECURITY.md) for vulnerability reporting and
+[CONTRIBUTING.md](https://github.com/alexandroit/stackline-sse/blob/main/CONTRIBUTING.md) for development instructions.
 
-## Adoption resources
+Run `npm run test` and inspect the package contents before release. Publish a new version through the [GitHub Actions publishing workflow](https://github.com/alexandroit/stackline-sse/actions/workflows/publish.yml), using the SHA-512 digest of the reviewed tarball. Verify the exact published version, tarball integrity, and npm provenance after the run.
 
-- [OpenAI, Anthropic, browser, Node.js, and edge recipes](docs/INTEGRATIONS.md)
-- [Reproducible parser and fragmentation benchmarks](docs/BENCHMARKS.md)
-- [Executable examples](examples)
-- [Stackline open-source catalog](https://alexandro.net/docs/open-source/)
+## Community and Support
 
-The examples ship in the npm tarball. Network examples expose functions and do
-not send requests during installation or import.
+Report reproducible package issues in the [issue tracker](https://github.com/alexandroit/stackline-sse/issues). Use the [security policy](https://github.com/alexandroit/stackline-sse/blob/main/SECURITY.md) for vulnerability reports.
+
+- [Stackline / Alexandro.Net](https://alexandro.net/)
+- [GitHub](https://github.com/alexandroit)
+- [Maintainer LinkedIn](https://www.linkedin.com/in/aleinfo/)
+- [Reddit community: r/Stackline](https://www.reddit.com/r/Stackline/)
 
 ## License
 
-[MIT](LICENSE) Copyright 2026 Alexandro Paixao Marques.
+[MIT](https://github.com/alexandroit/stackline-sse/blob/main/LICENSE) Copyright 2026 Alexandro Paixao Marques.
