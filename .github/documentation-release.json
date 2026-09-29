@@ -1,0 +1,37 @@
+{
+  "repository": "alexandroit/stackline-sse",
+  "packages": [
+    {
+      "name": "@stackline/sse",
+      "path": "README.md",
+      "version": "1.0.3",
+      "baselineVersion": "1.0.2",
+      "keywords": [
+        "stackline",
+        "npm-package",
+        "sse",
+        "browser",
+        "streams",
+        "typescript",
+        "nodejs",
+        "server-sent-events",
+        "eventsource",
+        "event-stream",
+        "streaming",
+        "ai-streaming",
+        "llm",
+        "fetch",
+        "reconnect",
+        "web-streams",
+        "node",
+        "edge",
+        "zero-dependency"
+      ],
+      "homepage": "https://alexandro.net/docs/vanilla/sse/",
+      "baselineTarball": "https://registry.npmjs.org/@stackline/sse/-/sse-1.0.2.tgz",
+      "baselineIntegrity": "sha512-tT91esdbzY0+fqSeuhc9nZM33XIp8fBf6MKLQwdhQotKIUuxTVokItFPY/BPhu/o+7Ek3UJb9xub+13p68iGdA==",
+      "expectedSha512": "3d9d2663712f9aa18959ff449d4aaea0239e9c8a870d58f7dca5002cea0d3988cfa387dfb2cedab1d5dd2484c43349fdc9f4553792297b3a862d84bf51d2e93b",
+      "tag": "docs-stackline-sse-v1.0.3"
+    }
+  ]
+}
