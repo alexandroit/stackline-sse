@@ -1,6 +1,6 @@
 {
   "name": "@stackline/sse",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Universal, spec-correct and memory-safe Server-Sent Events toolkit for AI streaming, browsers, servers and edge runtimes",
   "keywords": [
     "stackline",

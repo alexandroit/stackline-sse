@@ -4,7 +4,7 @@
     {
       "name": "@stackline/sse",
       "path": "README.md",
-      "version": "1.0.3",
+      "version": "1.0.4",
       "baselineVersion": "1.0.2",
       "keywords": [
         "stackline",
@@ -30,8 +30,8 @@
       "homepage": "https://alexandro.net/docs/vanilla/sse/",
       "baselineTarball": "https://registry.npmjs.org/@stackline/sse/-/sse-1.0.2.tgz",
       "baselineIntegrity": "sha512-tT91esdbzY0+fqSeuhc9nZM33XIp8fBf6MKLQwdhQotKIUuxTVokItFPY/BPhu/o+7Ek3UJb9xub+13p68iGdA==",
-      "expectedSha512": "3d9d2663712f9aa18959ff449d4aaea0239e9c8a870d58f7dca5002cea0d3988cfa387dfb2cedab1d5dd2484c43349fdc9f4553792297b3a862d84bf51d2e93b",
-      "tag": "docs-stackline-sse-v1.0.3"
+      "expectedSha512": "ed29387b7bc1634b71b931faec67fcd2020e47361fe96546c0a15d6df76b47003803cb71d5d82aed3260f978912c3895b629c30ee44941e00aef3dc8527e02a5",
+      "tag": "docs-stackline-sse-v1.0.4"
     }
   ]
 }
