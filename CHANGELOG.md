@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.5 - 2026-11-04
+
+- Update development dependency constraints and CI runtimes for reviewed security advisories.
+- Preserve the public runtime API; validate the packed package with the existing consumer tests.
+
+
 ## [1.0.2] - 2026-09-28
 
 - Organize package documentation, preserve API and migration examples, and add Stackline community links.

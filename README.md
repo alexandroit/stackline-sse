@@ -10,7 +10,7 @@
 
 **[Documentation](https://alexandro.net/docs/vanilla/sse/)** | **[npm](https://www.npmjs.com/package/@stackline/sse)** | **[Issues](https://github.com/alexandroit/stackline-sse/issues)** | **[Repository](https://github.com/alexandroit/stackline-sse)**
 
-**Current package version:** `1.0.4`
+**Current package version:** `1.0.5`
 
 ---
 
@@ -41,7 +41,7 @@ consistent contract:
 
 | Item | Value |
 | --- | --- |
-| Package | `@stackline/sse@1.0.4` |
+| Package | `@stackline/sse@1.0.5` |
 | Node.js runtime | `>=14.17.0` |
 | CommonJS / primary entry | `./dist/index.cjs` |
 | ES module entry | `./dist/index.js` |
